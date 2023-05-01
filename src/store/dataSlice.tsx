@@ -14,11 +14,13 @@ interface DataType {
 interface StateType {
   todayState: DataType[];
   yesterdayState: DataType[];
+  totalState: DataType[];
 }
 
 const initialState: StateType = {
   todayState: [],
   yesterdayState: [],
+  totalState: [],
 };
 
 const dataSlice = createSlice({
@@ -31,8 +33,11 @@ const dataSlice = createSlice({
     yesterdayUpdate: (state: StateType, action: PayloadAction<DataType[]>) => {
       state.yesterdayState = action.payload;
     },
+    totalUpdate: (state: StateType, action: PayloadAction<DataType[]>) => {
+      state.totalState = action.payload;
+    },
   },
 });
 
 export default dataSlice;
-export const { todayUpdate, yesterdayUpdate } = dataSlice.actions;
+export const { todayUpdate, yesterdayUpdate, totalUpdate } = dataSlice.actions;

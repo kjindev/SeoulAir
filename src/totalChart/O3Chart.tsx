@@ -22,23 +22,22 @@ ChartJS.register(
 );
 
 export default function O3Chart() {
-  const todayData = useSelector((state: RootState) => {
-    return state.data.todayState;
+  const [average, setAverage] = useState("");
+  const totalData = useSelector((state: RootState) => {
+    return state.data.totalState;
   });
-  const yesterdayData = useSelector((state: RootState) => {
-    return state.data.yesterdayState;
-  });
-  const [color, setColor] = useState("");
 
   useEffect(() => {
-    if (todayData.length !== 0) {
-      if (todayData[0]?.O3 > yesterdayData[0]?.O3) {
-        setColor("#ea580c");
-      } else {
-        setColor("#fb923c");
+    if (totalData.length !== 0) {
+      let sum: number = 0;
+      let result: number = 1;
+      for (let i = 0; i < totalData.length; i++) {
+        sum = sum + totalData[i].O3;
       }
+      result = sum / totalData.length;
+      setAverage((Math.ceil(result * 1000) / 1000).toFixed(3));
     }
-  }, [todayData]);
+  }, [totalData]);
 
   const options = {
     responsive: true,
@@ -64,9 +63,9 @@ export default function O3Chart() {
     labels: ["O3", "평균"],
     datasets: [
       {
-        data: [todayData[0]?.O3, yesterdayData[0]?.O3],
-        backgroundColor: [color, "#d6d3d1"],
-        cutout: 60,
+        data: [average, 0.1],
+        backgroundColor: ["#fb923c", "#d6d3d1"],
+        cutout: 20,
         borderWidth: [0, 5],
         rotation: -90,
         circumference: 180,
@@ -75,12 +74,12 @@ export default function O3Chart() {
   };
 
   return (
-    <div className="w-[100%] p-1 flex flex-col justify-center items-center">
-      <div className="w-[90%] h-[22vh] relative">
+    <div className="w-[100%] h-[100%] flex justify-center items-center">
+      <div className="w-[90%] h-[100%] relative p-5">
         <Doughnut options={options} data={data} />
-        <div className="absolute top-[25%] left-[50%] translate-x-[-50%] translate-y-[50%] text-sm">
-          <div className="text-sm text-center">O3 농도</div>
-          <div>{todayData[0]?.O3}ppm</div>
+        <div className="absolute top-[40%] left-[50%] translate-x-[-50%] translate-y-[50%] text-sm">
+          <div className="text-sm text-center">O3 평균 농도</div>
+          <div className="text-center">{average}ppm</div>
         </div>
       </div>
     </div>

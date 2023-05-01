@@ -1,5 +1,5 @@
 import Daily from "./Daily";
-import Year from "./Year";
+import Total from "./Total";
 import NavBar from "./NavBar";
 import { useSelector } from "react-redux";
 import { RootState } from "../store/store";
@@ -17,8 +17,8 @@ function App() {
           <Daily />
         </div>
       ) : (
-        <div className="pl-[15%] w-[100%] flex flex-col justify-center items-center">
-          <Year />
+        <div className="pt-[10vh] md:pt-0 md:pl-[15%] w-[100%] flex flex-col justify-center items-center">
+          <Total />
         </div>
       )}
     </div>

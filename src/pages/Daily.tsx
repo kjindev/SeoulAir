@@ -21,6 +21,7 @@ export default function Daily() {
     try {
       const response = await fetch(`http://localhost:4000/${date}`);
       const result = await response.json();
+      console.log(result);
       if (date === "today") {
         dispatch(todayUpdate(result.TimeAverageAirQuality.row));
         setDate(result.TimeAverageAirQuality.row[0].MSRDT);
@@ -57,21 +58,21 @@ export default function Daily() {
 
   return (
     <div>
-      <div className="pt-[5%] lg:pt-0 px-[5%] pb-5 w-[100%] flex flex-col md:flex-row justify-between lg:items-center">
+      <div className="pt-[5%] lg:pt-0 px-[5%] pb-5 w-[100%] flex flex-col md:flex-row justify-between items-center">
         <div className="text-2xl"> | {name}의 실시간 대기 정보</div>
-        <div className="text-sm">
+        <div className="">
           <span>({date.slice(0, 4)}년 </span>
           <span>{date.slice(4, 6)}월 </span>
           <span>{date.slice(6, 8)}일 </span>
           <span>{date.slice(8, 10)}시 기준)</span>
         </div>
       </div>
-      <div className="w-[85vw] flex flex-col justify-center items-center">
+      <div className="w-[95vw] md:w-[85vw] flex flex-col justify-center items-center">
         <div className="w-[90%] flex flex-col lg:flex-row justify-between items-center">
-          <div className="w-[100%] md:w-[50%] lg:w-[33%] lg:self-center mb-5">
+          <div className="w-[100%] md:w-[50%] lg:w-[33%] lg:h-[45vh] lg:self-center mb-5 bg-white rounded-xl">
             <Map />
           </div>
-          <div className="w-[100%] lg:w-[65%] lg:h-[45vh] flex justify-center lg:ml-5 mb-5 bg-white rounded-xl">
+          <div className="w-[100%] lg:w-[65%] h-[45vh] flex justify-center lg:ml-5 mb-5 bg-white rounded-xl">
             <PM10Chart />
           </div>
         </div>
