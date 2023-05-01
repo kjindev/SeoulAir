@@ -21,54 +21,43 @@ ChartJS.register(
   Legend
 );
 
-export default function O3Chart() {
-  const [yesterdayO3, setYesterdayO3] = useState<number[]>([]);
-  const [todayO3, setTodayO3] = useState<number[]>([]);
+export default function PM25Chart() {
+  const [yesterdayPM10, setYesterdayPM10] = useState<number[]>([]);
+  const [todayPM10, setTodayPM10] = useState<number[]>([]);
   const [time, setTime] = useState<string[]>([]);
-  const dataList = useSelector((state: RootState) => {
-    return state.data;
+  const todayData = useSelector((state: RootState) => {
+    return state.data.todayState;
   });
-  /*
-  useEffect(() => {
-    if (dataList) {
-      let timeArray: string[] = [];
-      for (let i = dataList.todayState.length - 1; i >= 0; i--) {
-        timeArray.push(dataList.todayState[i].MSRDT.slice(8, 10));
-      }
-      setTime(timeArray);
-    }
-  }, [dataList]);
+
+  const yesterdayData = useSelector((state: RootState) => {
+    return state.data.yesterdayState;
+  });
 
   useEffect(() => {
-    if (time) {
-      let todaylist: number[] = [];
-      let yesterdaylist: number[] = [];
-      for (let i = time.length - 1; i >= time.length - 5; i--) {
-        todaylist?.push(dataList.todayState[i].O3);
-        yesterdaylist?.push(dataList.yesterdayState[i].O3);
-      }
-      setTodayO3(todaylist);
-      setYesterdayO3(yesterdaylist);
-    }
-  }, [time]);
-
-  /*
-  useEffect(() => {
-    if (dataList) {
-      let COlist: number[] = [];
-      let O3list: number[] = [];
+    if (todayData.length !== 0) {
+      let todayPM10Array: number[] = [];
       let timeArray: string[] = [];
-      for (let i = dataList.todayState.length - 1; i >= todayData.length - 5; i--) {
-        O3list.push(todayData[i].O3);
-        COlist.push(todayData[i].CO);
+      for (let i = 4; i >= 0; i--) {
+        todayPM10Array.push(todayData[i].PM25);
         timeArray.push(todayData[i].MSRDT.slice(8, 10) + "시");
       }
-      setCOdata(COlist);
-      setO3data(O3list);
+      setTodayPM10(todayPM10Array);
       setTime(timeArray);
     }
-  }, [dataList]);
-*/
+  }, [todayData]);
+
+  useEffect(() => {
+    if (yesterdayData.length !== 0) {
+      let yesterdayPM10Array: number[] = [];
+      let timeArray: string[] = [];
+      for (let i = 4; i >= 0; i--) {
+        yesterdayPM10Array.push(yesterdayData[i].PM25);
+        timeArray.push(yesterdayData[i].MSRDT.slice(8, 10) + "시");
+      }
+      setYesterdayPM10(yesterdayPM10Array);
+    }
+  }, [yesterdayData]);
+
   const options = {
     responsive: true,
     maintainAspectRatio: false,
@@ -85,7 +74,7 @@ export default function O3Chart() {
     scales: {
       y: {
         min: 0,
-        //max: 30,
+        max: 30,
       },
     },
   };
@@ -94,14 +83,14 @@ export default function O3Chart() {
     labels: time,
     datasets: [
       {
-        label: "CO",
-        data: yesterdayO3,
+        label: "어제",
+        data: yesterdayPM10,
         borderColor: "#fbbf24",
         backgroundColor: "#fbbf24",
       },
       {
-        label: "O3",
-        data: todayO3,
+        label: "오늘",
+        data: todayPM10,
         borderColor: "#f97316",
         backgroundColor: "#f97316",
       },

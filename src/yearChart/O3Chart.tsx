@@ -21,15 +21,22 @@ ChartJS.register(
   Legend
 );
 
-export default function COChart() {
+export default function O3Chart() {
   const todayData = useSelector((state: RootState) => {
     return state.data.todayState;
   });
-  const [COdata, setCOdata] = useState(0);
+  const yesterdayData = useSelector((state: RootState) => {
+    return state.data.yesterdayState;
+  });
+  const [color, setColor] = useState("");
 
   useEffect(() => {
-    if (todayData) {
-      setCOdata(todayData[0]?.CO);
+    if (todayData.length !== 0) {
+      if (todayData[0]?.O3 > yesterdayData[0]?.O3) {
+        setColor("#ea580c");
+      } else {
+        setColor("#fb923c");
+      }
     }
   }, [todayData]);
 
@@ -43,7 +50,7 @@ export default function COChart() {
       },
       title: {
         display: false,
-        text: "CO",
+        text: "O3",
       },
     },
     scales: {
@@ -54,26 +61,26 @@ export default function COChart() {
   };
 
   const data = {
-    labels: ["CO", "평균"],
+    labels: ["O3", "평균"],
     datasets: [
       {
-        data: [COdata, 0.5],
-        backgroundColor: ["#fbbf24", "#d6d3d1"],
+        data: [todayData[0]?.O3, yesterdayData[0]?.O3],
+        backgroundColor: [color, "#d6d3d1"],
+        cutout: 60,
+        borderWidth: [0, 5],
         rotation: -90,
         circumference: 180,
-        cutout: 55,
-        borderWidth: [0, 5],
       },
     ],
   };
 
   return (
-    <div className="w-[100%] p-3 pl-5 flex flex-col justify-center items-center">
-      <div className="text-sm py-2 text-center">CO 농도</div>
-      <div className="w-[90%] h-[20vh] relative">
+    <div className="w-[100%] p-1 flex flex-col justify-center items-center">
+      <div className="w-[90%] h-[22vh] relative">
         <Doughnut options={options} data={data} />
-        <div className="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[50%] text-sm">
-          {COdata}ppm
+        <div className="absolute top-[25%] left-[50%] translate-x-[-50%] translate-y-[50%] text-sm">
+          <div className="text-sm text-center">O3 농도</div>
+          <div>{todayData[0]?.O3}ppm</div>
         </div>
       </div>
     </div>

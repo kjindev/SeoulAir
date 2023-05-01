@@ -1,60 +1,56 @@
 import { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 import {
   Chart as ChartJS,
-  CategoryScale,
   LinearScale,
-  BarElement,
-  Title,
+  PointElement,
+  LineElement,
   Tooltip,
   Legend,
 } from "chart.js";
-import { Bar } from "react-chartjs-2";
-import { useSelector } from "react-redux";
+import { Scatter } from "react-chartjs-2";
 import { RootState } from "../store/store";
 
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title,
-  Tooltip,
-  Legend
-);
+ChartJS.register(LinearScale, PointElement, LineElement, Tooltip, Legend);
 
 export default function PM25Chart() {
-  const [yesterdayPM10, setYesterdayPM10] = useState<number[]>([]);
-  const [todayPM10, setTodayPM10] = useState<number[]>([]);
-  const [time, setTime] = useState<string[]>([]);
+  const [todayPM25, setTodayPM25] = useState<{ x: number; y: number }[]>([]);
+  const [yesterdayPM25, setYesterdayPM25] = useState<
+    { x: number; y: number }[]
+  >([]);
+  const [time, setTime] = useState<number[]>([]);
   const todayData = useSelector((state: RootState) => {
     return state.data.todayState;
   });
-
   const yesterdayData = useSelector((state: RootState) => {
     return state.data.yesterdayState;
   });
-
   useEffect(() => {
-    if (todayData.length !== 0) {
-      let todayPM10Array: number[] = [];
-      let timeArray: string[] = [];
-      for (let i = 4; i >= 0; i--) {
-        todayPM10Array.push(todayData[i].PM25);
-        timeArray.push(todayData[i].MSRDT.slice(8, 10) + "시");
+    if (todayData) {
+      let todayList: { x: number; y: number }[] = [];
+      let timeList: number[] = [];
+      for (let i = todayData.length - 1; i >= 0; i--) {
+        todayList.push({
+          x: Number(todayData[i].MSRDT.slice(8, 10)),
+          y: todayData[i].PM25,
+        });
+        timeList.push(Number(todayData[i].MSRDT.slice(8, 10)));
       }
-      setTodayPM10(todayPM10Array);
-      setTime(timeArray);
+      setTodayPM25(todayList);
+      setTime(timeList);
     }
   }, [todayData]);
 
   useEffect(() => {
-    if (yesterdayData.length !== 0) {
-      let yesterdayPM10Array: number[] = [];
-      let timeArray: string[] = [];
-      for (let i = 4; i >= 0; i--) {
-        yesterdayPM10Array.push(yesterdayData[i].PM25);
-        timeArray.push(yesterdayData[i].MSRDT.slice(8, 10) + "시");
+    if (yesterdayData) {
+      let yesterdayList: { x: number; y: number }[] = [];
+      for (let i = yesterdayData.length - 1; i >= 0; i--) {
+        yesterdayList.push({
+          x: Number(yesterdayData[i].MSRDT.slice(8, 10)),
+          y: yesterdayData[i].PM25,
+        });
       }
-      setYesterdayPM10(yesterdayPM10Array);
+      setYesterdayPM25(yesterdayList);
     }
   }, [yesterdayData]);
 
@@ -64,20 +60,19 @@ export default function PM25Chart() {
     plugins: {
       legend: {
         display: false,
-        padding: 20,
-      },
-      title: {
-        display: false,
-        text: "초미세먼지 농도 (최근 5시간)",
       },
     },
     scales: {
       x: {
         display: false,
+        max: 24,
       },
       y: {
         min: 0,
-        max: 20,
+        max: 40,
+        ticks: {
+          stepSize: 10,
+        },
       },
     },
   };
@@ -86,26 +81,31 @@ export default function PM25Chart() {
     labels: time,
     datasets: [
       {
+        fill: true,
         label: "어제",
-        data: yesterdayPM10,
-        borderColor: "#d6d3d1",
-        backgroundColor: "#d6d3d1",
+        data: yesterdayPM25,
+        borderColor: "#fbbf24",
+        backgroundColor: "#fbbf24",
+        borderWidth: 5,
       },
       {
+        fill: true,
         label: "오늘",
-        data: todayPM10,
-        borderColor: "#f87171",
-        backgroundColor: "#f87171",
+        data: todayPM25,
+        borderColor: "#f97316",
+        backgroundColor: "#f97316",
+        borderWidth: 5,
       },
     ],
   };
+
   return (
     <div className="w-[100%] p-2 pl-3">
       <div className="w-[100%] py-2">
-        <div className="text-sm"> 초미세먼지 농도 (단위: ㎍/㎥)</div>
+        <div className="text-sm text-center">초미세먼지 (단위: ㎍/㎥)</div>
       </div>
       <div className="w-[100%] h-[20vh]">
-        <Bar options={options} data={data} />
+        <Scatter options={options} data={data} />
       </div>
     </div>
   );

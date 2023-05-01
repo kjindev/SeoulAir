@@ -1,8 +1,8 @@
 import { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { todayUpdate, yesterdayUpdate } from "./store/dataSlice";
-import { nameUpdate } from "./store/nameSlice";
-import { RootState } from "./store/store";
+import { todayUpdate, yesterdayUpdate } from "../store/dataSlice";
+import { nameUpdate } from "../store/nameSlice";
+import { RootState } from "../store/store";
 
 export default function Map() {
   const dispatch = useDispatch();

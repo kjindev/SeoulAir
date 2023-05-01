@@ -28,6 +28,17 @@ export default function NO2Chart() {
   const yesterdayData = useSelector((state: RootState) => {
     return state.data.yesterdayState;
   });
+  const [color, setColor] = useState("");
+
+  useEffect(() => {
+    if (todayData.length !== 0) {
+      if (todayData[0]?.NO2 > yesterdayData[0]?.NO2) {
+        setColor("#ea580c");
+      } else {
+        setColor("#fb923c");
+      }
+    }
+  }, [todayData]);
 
   const options = {
     responsive: true,
@@ -39,7 +50,7 @@ export default function NO2Chart() {
       },
       title: {
         display: false,
-        text: "SO2",
+        text: "CO",
       },
     },
     scales: {
@@ -54,19 +65,21 @@ export default function NO2Chart() {
     datasets: [
       {
         data: [todayData[0]?.NO2, yesterdayData[0]?.NO2],
-        backgroundColor: ["#fb923c", "#d6d3d1"],
-        cutout: 45,
+        backgroundColor: [color, "#d6d3d1"],
+        cutout: 60,
         borderWidth: [0, 5],
+        rotation: -90,
+        circumference: 180,
       },
     ],
   };
 
   return (
     <div className="w-[100%] p-1 flex flex-col justify-center items-center">
-      <div className="w-[90%] h-[22vh] relative">
+      <div className="w-[100%] h-[22vh] relative">
         <Doughnut options={options} data={data} />
-        <div className="absolute top-[28%] left-[50%] translate-x-[-50%] translate-y-[50%] text-sm">
-          <div className="text-xs text-center">NO2 농도</div>
+        <div className="absolute top-[25%] left-[50%] translate-x-[-50%] translate-y-[50%] text-sm">
+          <div className="text-sm text-center">NO2 농도</div>
           <div>{todayData[0]?.NO2}ppm</div>
         </div>
       </div>
