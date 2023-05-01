@@ -25,50 +25,39 @@ export default function O3Chart() {
   const [yesterdayO3, setYesterdayO3] = useState<number[]>([]);
   const [todayO3, setTodayO3] = useState<number[]>([]);
   const [time, setTime] = useState<string[]>([]);
-  const dataList = useSelector((state: RootState) => {
-    return state.data;
+  const todayData = useSelector((state: RootState) => {
+    return state.data.todayState;
   });
-  /*
-  useEffect(() => {
-    if (dataList) {
-      let timeArray: string[] = [];
-      for (let i = dataList.todayState.length - 1; i >= 0; i--) {
-        timeArray.push(dataList.todayState[i].MSRDT.slice(8, 10));
-      }
-      setTime(timeArray);
-    }
-  }, [dataList]);
+
+  const yesterdayData = useSelector((state: RootState) => {
+    return state.data.yesterdayState;
+  });
 
   useEffect(() => {
-    if (time) {
-      let todaylist: number[] = [];
-      let yesterdaylist: number[] = [];
-      for (let i = time.length - 1; i >= time.length - 5; i--) {
-        todaylist?.push(dataList.todayState[i].O3);
-        yesterdaylist?.push(dataList.yesterdayState[i].O3);
+    if (todayData.length !== 0) {
+      let todayO3List: number[] = [];
+      let timeList: string[] = [];
+      for (let i = 4; i >= 0; i--) {
+        todayO3List.push(todayData[i].O3);
+        timeList.push(todayData[i].MSRDT.slice(8, 10) + "시");
       }
-      setTodayO3(todaylist);
-      setYesterdayO3(yesterdaylist);
+      setTodayO3(todayO3List);
+      setTime(timeList);
     }
-  }, [time]);
+  }, [todayData]);
 
-  /*
   useEffect(() => {
-    if (dataList) {
-      let COlist: number[] = [];
-      let O3list: number[] = [];
-      let timeArray: string[] = [];
-      for (let i = dataList.todayState.length - 1; i >= todayData.length - 5; i--) {
-        O3list.push(todayData[i].O3);
-        COlist.push(todayData[i].CO);
-        timeArray.push(todayData[i].MSRDT.slice(8, 10) + "시");
+    if (yesterdayData.length !== 0) {
+      let yesterdayO3List: number[] = [];
+      let timeList: string[] = [];
+      for (let i = 4; i >= 0; i--) {
+        yesterdayO3List.push(yesterdayData[i].O3);
+        timeList.push(yesterdayData[i].MSRDT.slice(8, 10) + "시");
       }
-      setCOdata(COlist);
-      setO3data(O3list);
-      setTime(timeArray);
+      setYesterdayO3(yesterdayO3List);
     }
-  }, [dataList]);
-*/
+  }, [yesterdayData]);
+
   const options = {
     responsive: true,
     maintainAspectRatio: false,
@@ -79,13 +68,16 @@ export default function O3Chart() {
       },
       title: {
         display: false,
-        text: "초미세먼지 농도 (최근 5시간)",
+        text: "오존 농도 (최근 5시간)",
       },
     },
     scales: {
       y: {
         min: 0,
-        //max: 30,
+        max: 0.08,
+        ticks: {
+          stepSize: 0.02,
+        },
       },
     },
   };
@@ -111,7 +103,7 @@ export default function O3Chart() {
     <div className="w-[100%] p-2 pl-3">
       <div className="w-[100%] py-2">
         <div className="text-sm text-center">
-          최근 5시간 초미세먼지 (단위: ㎍/㎥)
+          최근 5시간 오존 농도 (단위: ppm)
         </div>
       </div>
       <div className="w-[100%] h-[20vh]">

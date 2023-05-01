@@ -76,18 +76,18 @@ export default function Daily() {
           </div>
         </div>
         <div className="w-[90%] flex flex-col lg:flex-row justify-between items-center">
-          <div className="w-[100%] md:mb-5 lg:mb-0 lg:w-[70%] flex flex-col md:flex-row justify-between">
-            <div className="w-[100%] mb-5 md:mb-0 md:w-[27%] h-[27vh] flex justify-center bg-white rounded-xl">
+          <div className="w-[100%] md:mb-5 lg:mb-0 lg:mr-3 lg:w-[42%] flex justify-between">
+            <div className="w-[100%] mr-1 mb-5 md:mb-0 md:w-[48.5%] h-[27vh] flex justify-center bg-white rounded-xl">
               <SO2Chart />
             </div>
-            <div className="w-[100%] mb-5 md:mb-0 md:w-[27%] h-[27vh] flex justify-center bg-white rounded-xl">
+            <div className="w-[100%] ml-1 mb-5 md:mb-0 md:w-[48.5%] h-[27vh] flex justify-center bg-white rounded-xl">
               <NO2Chart />
             </div>
-            <div className="w-[100%] mb-5 md:mb-0 md:w-[40%] h-[27vh] flex justify-center bg-white rounded-xl">
-              <O3Chart />
-            </div>
           </div>
-          <div className="w-[100%] lg:w-[35%] lg:ml-5 lg:h-[27vh] flex justify-center bg-white rounded-xl">
+          <div className="w-[100%] mb-5 lg:mb-0 lg:w-[30%] h-[27vh] flex justify-center bg-white rounded-xl">
+            <O3Chart />
+          </div>
+          <div className="w-[100%] lg:w-[32%] lg:ml-3 lg:h-[27vh] flex justify-center bg-white rounded-xl">
             <PM25Chart />
           </div>
         </div>

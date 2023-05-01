@@ -86,7 +86,7 @@ export default function PM25Chart() {
         data: yesterdayPM25,
         borderColor: "#fbbf24",
         backgroundColor: "#fbbf24",
-        borderWidth: 5,
+        borderWidth: 3,
       },
       {
         fill: true,
@@ -94,7 +94,7 @@ export default function PM25Chart() {
         data: todayPM25,
         borderColor: "#f97316",
         backgroundColor: "#f97316",
-        borderWidth: 5,
+        borderWidth: 3,
       },
     ],
   };
