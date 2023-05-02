@@ -10,7 +10,7 @@ import {
   Legend,
 } from "chart.js";
 import { Doughnut } from "react-chartjs-2";
-import { RootState } from "../store/store";
+import { RootState } from "../../store/store";
 
 ChartJS.register(
   CategoryScale,
@@ -21,7 +21,7 @@ ChartJS.register(
   Legend
 );
 
-export default function SO2Chart() {
+export default function NO2Chart() {
   const todayData = useSelector((state: RootState) => {
     return state.data.todayState;
   });
@@ -53,7 +53,7 @@ export default function SO2Chart() {
     labels: ["오늘", "어제"],
     datasets: [
       {
-        data: [todayData[0]?.SO2, yesterdayData[0]?.SO2],
+        data: [todayData[0]?.NO2, yesterdayData[0]?.NO2],
         backgroundColor: ["#fb923c", "#d6d3d1"],
         cutout: 45,
         borderWidth: [0, 5],
@@ -66,8 +66,8 @@ export default function SO2Chart() {
       <div className="w-[90%] h-[22vh] relative">
         <Doughnut options={options} data={data} />
         <div className="absolute top-[28%] left-[50%] translate-x-[-50%] translate-y-[50%] text-sm">
-          <div className="text-xs text-center">SO2 농도</div>
-          <div>{todayData[0]?.SO2}ppm</div>
+          <div className="text-xs text-center">NO2 농도</div>
+          <div>{todayData[0]?.NO2}ppm</div>
         </div>
       </div>
     </div>

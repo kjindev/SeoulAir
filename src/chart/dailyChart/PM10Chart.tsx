@@ -12,7 +12,7 @@ import {
 } from "chart.js";
 import { Line } from "react-chartjs-2";
 import { useSelector } from "react-redux";
-import { RootState } from "../store/store";
+import { RootState } from "../../store/store";
 
 ChartJS.register(
   CategoryScale,
@@ -32,7 +32,6 @@ export default function PM10Chart() {
   const todayData = useSelector((state: RootState) => {
     return state.data.todayState;
   });
-
   const yesterdayData = useSelector((state: RootState) => {
     return state.data.yesterdayState;
   });

@@ -10,7 +10,7 @@ import {
 } from "chart.js";
 import { Bar } from "react-chartjs-2";
 import { useSelector } from "react-redux";
-import { RootState } from "../store/store";
+import { RootState } from "../../store/store";
 
 ChartJS.register(
   CategoryScale,
@@ -24,7 +24,6 @@ ChartJS.register(
 export default function PM10Chart() {
   const [todayPM10, setTodayPM10] = useState<number[]>([]);
   const [name, setName] = useState<string[]>([]);
-  const [average, setAverage] = useState(1);
   const totalData = useSelector((state: RootState) => {
     return state.data.totalState;
   });
@@ -33,11 +32,12 @@ export default function PM10Chart() {
     if (totalData.length !== 0) {
       let todayList: number[] = [];
       let nameList: string[] = [];
+      let average: number = 1;
       let sum: number = 0;
       for (let i = 0; i < totalData.length; i++) {
         sum = sum + totalData[i].PM10;
       }
-      setAverage(sum / totalData.length);
+      average = sum / totalData.length;
       for (let i = 0; i < totalData.length; i++) {
         todayList.push(totalData[i].PM10 - average);
         nameList.push(totalData[i].MSRSTE_NM);
@@ -78,7 +78,9 @@ export default function PM10Chart() {
       {
         label: "미세먼지",
         data: todayPM10,
-        backgroundColor: "#fb923c",
+        borderColor: "#f97316",
+        backgroundColor: "rgb(249, 115, 22, 0.5)",
+        borderWidth: 1,
       },
     ],
   };

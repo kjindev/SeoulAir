@@ -10,7 +10,7 @@ import {
 } from "chart.js";
 import { Bar } from "react-chartjs-2";
 import { useSelector } from "react-redux";
-import { RootState } from "../store/store";
+import { RootState } from "../../store/store";
 
 ChartJS.register(
   CategoryScale,
@@ -28,7 +28,6 @@ export default function O3Chart() {
   const todayData = useSelector((state: RootState) => {
     return state.data.todayState;
   });
-
   const yesterdayData = useSelector((state: RootState) => {
     return state.data.yesterdayState;
   });
@@ -38,8 +37,8 @@ export default function O3Chart() {
       let todayO3List: number[] = [];
       let timeList: string[] = [];
       for (let i = 4; i >= 0; i--) {
-        todayO3List.push(todayData[i].O3);
-        timeList.push(todayData[i].MSRDT.slice(8, 10) + "시");
+        todayO3List.push(todayData[i]?.O3);
+        timeList.push(todayData[i]?.MSRDT.slice(8, 10) + "시");
       }
       setTodayO3(todayO3List);
       setTime(timeList);
@@ -49,10 +48,8 @@ export default function O3Chart() {
   useEffect(() => {
     if (yesterdayData.length !== 0) {
       let yesterdayO3List: number[] = [];
-      let timeList: string[] = [];
       for (let i = 4; i >= 0; i--) {
-        yesterdayO3List.push(yesterdayData[i].O3);
-        timeList.push(yesterdayData[i].MSRDT.slice(8, 10) + "시");
+        yesterdayO3List.push(yesterdayData[i]?.O3);
       }
       setYesterdayO3(yesterdayO3List);
     }

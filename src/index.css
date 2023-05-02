@@ -46,26 +46,26 @@ body {
   stroke-linejoin: round;
   stroke: #ffffff;
   stroke-width: 2;
-  fill: #fed7aa;
+  fill: #e5e5e5;
 }
 
 .PM10map02 {
   stroke-linejoin: round;
   stroke: #ffffff;
   stroke-width: 2;
-  fill: #fb923c;
+  fill: #a3a3a3;
 }
 
 .PM10map03 {
   stroke-linejoin: round;
   stroke: #ffffff;
   stroke-width: 2;
-  fill: #ea580c;
+  fill: #525252;
 }
 
 .tPM10map04 {
   stroke-linejoin: round;
   stroke: #ffffff;
   stroke-width: 2;
-  fill: #9a3412;
+  fill: #262626;
 }

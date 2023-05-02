@@ -9,7 +9,7 @@ import {
   Legend,
 } from "chart.js";
 import { Scatter } from "react-chartjs-2";
-import { RootState } from "../store/store";
+import { RootState } from "../../store/store";
 
 ChartJS.register(LinearScale, PointElement, LineElement, Tooltip, Legend);
 
@@ -25,6 +25,7 @@ export default function PM25Chart() {
   const yesterdayData = useSelector((state: RootState) => {
     return state.data.yesterdayState;
   });
+
   useEffect(() => {
     if (todayData) {
       let todayList: { x: number; y: number }[] = [];
@@ -65,11 +66,11 @@ export default function PM25Chart() {
     scales: {
       x: {
         display: false,
-        max: 24,
+        max: 23,
       },
       y: {
         min: 0,
-        max: 70,
+        max: 40,
         ticks: {
           stepSize: 10,
         },
