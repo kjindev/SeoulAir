@@ -1,105 +1,62 @@
 import { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { totalUpdate } from "../store/dataSlice";
 import { RootState } from "../store/store";
 import {
   code1Update,
   code2Update,
   code3Update,
   code4Update,
-  sumUpdate,
 } from "../store/countSlice";
 
 export default function TotalMap() {
   const dispatch = useDispatch();
   const dataRef = useRef<HTMLInputElement>(null);
-  const todayDate = useSelector((state: RootState) => {
-    return state.name.todayDateState;
-  });
   const dataList = useSelector((state: RootState) => {
     return state.data.totalState;
-  });
-  const countSum = useSelector((state: RootState) => {
-    return state.count.sumState;
   });
 
   useEffect(() => {
     if (dataList.length !== 0) {
+      let code1: number = 0;
+      let code2: number = 0;
+      let code3: number = 0;
+      let code4: number = 0;
       for (let i = 0; i < dataList.length; i++) {
-        if (dataList[i].PM10 <= 30) {
-          dataRef.current?.children[0].children[i + 1].classList.add(
-            "PM10map01"
-          );
-          if (countSum === 0) {
-            dispatch(code1Update());
-            dispatch(sumUpdate());
-          }
-        } else if (dataList[i].PM10 > 30 && dataList[i].PM10 <= 80) {
-          dataRef.current?.children[0].children[i + 1].classList.add(
-            "PM10map02"
-          );
-          if (countSum === 0) {
-            dispatch(code2Update());
-            dispatch(sumUpdate());
-          }
-        } else if (dataList[i].PM10 > 81 && dataList[i].PM10 <= 150) {
-          dataRef.current?.children[0].children[i + 1].classList.add(
-            "PM10map03"
-          );
-          if (countSum === 0) {
-            dispatch(code3Update());
-            dispatch(sumUpdate());
-          }
-        } else if (dataList[i].PM10 > 150) {
-          dataRef.current?.children[0].children[i + 1].classList.add(
-            "PM10map04"
-          );
-          if (countSum === 0) {
-            dispatch(code4Update());
-            dispatch(sumUpdate());
+        if (dataRef.current) {
+          const dataClass = dataRef.current.children[0];
+          if (dataList[i].PM10 <= 30) {
+            dataClass.children[i + 1].classList.remove(
+              dataClass.children[i + 1].classList[0]
+            );
+            dataClass.children[i + 1].classList.add("PM10map01");
+            code1 = code1 + 1;
+          } else if (dataList[i].PM10 > 30 && dataList[i].PM10 <= 80) {
+            dataClass.children[i + 1].classList.remove(
+              dataClass.children[i + 1].classList[0]
+            );
+            dataClass.children[i + 1].classList.add("PM10map02");
+            code2 = code2 + 1;
+          } else if (dataList[i].PM10 > 81 && dataList[i].PM10 <= 150) {
+            dataClass.children[i + 1].classList.remove(
+              dataClass.children[i + 1].classList[0]
+            );
+            dataClass.children[i + 1].classList.add("PM10map03");
+            code3 = code3 + 1;
+          } else if (dataList[i].PM10 > 150) {
+            dataClass.children[i + 1].classList.remove(
+              dataClass.children[i + 1].classList[0]
+            );
+            dataClass.children[i + 1].classList.add("PM10map04");
+            code4 = code4 + 1;
           }
         }
       }
+      dispatch(code1Update(code1));
+      dispatch(code2Update(code2));
+      dispatch(code3Update(code3));
+      dispatch(code4Update(code4));
     }
   }, [dataList]);
-
-  const getData = async () => {
-    try {
-      const response = await fetch(
-        "https://port-0-seoulair-server-3nec02mlh4e8glv.sel4.cloudtype.app/data"
-      );
-      const result = await response.json();
-      dispatch(totalUpdate(result.TimeAverageAirQuality.row));
-    } catch (error) {
-      console.log(error);
-      return null;
-    }
-  };
-
-  const updateData = async (reqDate: string) => {
-    await fetch(
-      "https://port-0-seoulair-server-3nec02mlh4e8glv.sel4.cloudtype.app/data",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          date: reqDate,
-          time: "0300",
-          name: "",
-        }),
-      }
-    );
-  };
-
-  useEffect(() => {
-    if (todayDate.length !== 0) {
-      updateData(todayDate)
-        .then(() => getData())
-        .catch((error) => console.log(error));
-    }
-  }, [todayDate]);
 
   return (
     <div className="w-[100%] h-[100%] flex flex-col items-center">

@@ -16,15 +16,12 @@ export default function BubbleChart() {
   const [todayPM10, setTodayPM10] = useState<
     { x: number; y: number; r: number }[]
   >([]);
-  const todayData = useSelector((state: RootState) => {
-    return state.data.todayState;
-  });
   const dataList = useSelector((state: RootState) => {
     return state.data.totalState;
   });
 
   useEffect(() => {
-    if (todayData.length !== 0) {
+    if (dataList.length !== 0) {
       let todayPM10List: { x: number; y: number; r: number }[] = [];
       for (let i = dataList.length - 1; i >= 0; i--) {
         todayPM10List.push({
@@ -35,7 +32,7 @@ export default function BubbleChart() {
       }
       setTodayPM10(todayPM10List);
     }
-  }, [todayData]);
+  }, [dataList]);
 
   const options = {
     indexAxis: "y" as const,

@@ -1,7 +1,7 @@
+import { useState, useEffect } from "react";
 import PM10Chart from "../chart/totalChart/PM10Chart";
 import TotalMap from "../chart/TotalMap";
 import PieChart from "../chart/totalChart/PieChart";
-import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { totalUpdate } from "../store/dataSlice";
 import { RootState } from "../store/store";
@@ -9,9 +9,23 @@ import BubbleChart from "../chart/totalChart/BubbleChart";
 
 export default function Daily() {
   const dispatch = useDispatch();
+  const [timeList, setTimeList] = useState<string[]>([]);
   const date = useSelector((state: RootState) => {
     return state.name;
   });
+  const todayData = useSelector((state: RootState) => {
+    return state.data.todayState;
+  });
+
+  useEffect(() => {
+    if (todayData.length !== 0) {
+      let list: string[] = [];
+      for (let i = todayData.length - 2; i >= 0; i--) {
+        list.push(todayData[i].MSRDT.slice(8, 10) + "시");
+      }
+      setTimeList(list);
+    }
+  }, [todayData]);
 
   const getData = async () => {
     try {
@@ -27,7 +41,7 @@ export default function Daily() {
     }
   };
 
-  const updateData = async (reqDate: string) => {
+  const updateData = async (reqDate: string, reqTime: string | undefined) => {
     await fetch(
       "https://port-0-seoulair-server-3nec02mlh4e8glv.sel4.cloudtype.app/data",
       {
@@ -37,25 +51,42 @@ export default function Daily() {
         },
         body: JSON.stringify({
           date: reqDate,
-          time: "0300",
+          time: `${reqTime}00`,
           name: "",
         }),
       }
     );
   };
 
+  const optionClick = (event: React.MouseEvent<HTMLSelectElement>) => {
+    const target = event.target as HTMLSelectElement;
+    const selectTime = target.value.slice(0, 2);
+    updateData(date.todayDateState, selectTime)
+      .then(() => getData())
+      .catch((error) => console.log(error));
+  };
+
   useEffect(() => {
-    if (date.todayDateState.length !== 0) {
-      updateData(date.todayDateState)
+    if (timeList.length !== 0) {
+      updateData(date.todayDateState, timeList[0].slice(0, 2))
         .then(() => getData())
         .catch((error) => console.log(error));
     }
-  }, [date]);
+  }, [timeList]);
 
   return (
     <div>
       <div className="pt-[5%] lg:pt-0 px-[5%] pb-5 w-[100%] flex flex-col md:flex-row items-center">
-        <div className="text-2xl"> | 서울 대기 정보</div>
+        <div className="text-2xl"> | 오늘의 서울 대기 정보</div>
+        <div className="p-3">
+          <select onClick={optionClick} className="px-3 py-1 drop-shadow">
+            {timeList?.map((item, index) => (
+              <option key={index} value={item}>
+                {item}
+              </option>
+            ))}
+          </select>
+        </div>
       </div>
       <div className="w-[95vw] md:w-[85vw] flex justify-center items-center">
         <div className="w-[90%] lg:h-[100%] flex flex-col lg:flex-row justify-between items-center">
