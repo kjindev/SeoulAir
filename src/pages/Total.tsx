@@ -60,11 +60,11 @@ export default function Daily() {
       <div className="w-[95vw] md:w-[85vw] flex justify-center items-center">
         <div className="w-[90%] lg:h-[100%] flex flex-col lg:flex-row justify-between items-center">
           <div className="w-[100%] lg:w-[50%] lg:mr-3 flex flex-col justify-center items-center">
-            <div className="w-[100%] lg:h-[32vh] mb-5 flex bg-white rounded-xl">
-              <div className="w-[48%]">
+            <div className="w-[100%] lg:h-[32vh] mb-5 flex flex-col lg:flex-row items-center justify-between">
+              <div className="w-[100%] md:w-[50%] lg:w-[48%] lg:h-[100%] bg-white rounded-xl">
                 <TotalMap />
               </div>
-              <div className="w-[48%]">
+              <div className="w-[100%] md:w-[50%] lg:w-[48%] mt-5 lg:mt-0 lg:h-[32vh] bg-white rounded-xl">
                 <PieChart />
               </div>
             </div>

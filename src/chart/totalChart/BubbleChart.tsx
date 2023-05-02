@@ -25,7 +25,6 @@ export default function BubbleChart() {
 
   useEffect(() => {
     if (todayData.length !== 0) {
-      console.log(dataList);
       let todayPM10List: { x: number; y: number; r: number }[] = [];
       for (let i = dataList.length - 1; i >= 0; i--) {
         todayPM10List.push({
@@ -62,5 +61,14 @@ export default function BubbleChart() {
       },
     ],
   };
-  return <Bubble options={options} data={data} />;
+  return (
+    <div className="w-[100%] h-[100%]">
+      <div className="pt-3 text-center text-sm">
+        미세먼지 - NO2 - 초미세먼지 상관관계
+      </div>
+      <div className="w-[100%] h-[90%] p-2 pt-0">
+        <Bubble options={options} data={data} />
+      </div>
+    </div>
+  );
 }

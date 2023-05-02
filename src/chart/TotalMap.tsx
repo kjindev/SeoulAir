@@ -102,8 +102,11 @@ export default function TotalMap() {
   }, [todayDate]);
 
   return (
-    <div className="w-[100%] h-[100%] flex items-center justify-center">
-      <div ref={dataRef} className="w-[100%] h-[100%]">
+    <div className="w-[100%] h-[100%] flex flex-col items-center">
+      <div className="text-sm text-center pt-5">
+        미세먼지 현황 <div className="text-xs">(좋음/보통/나쁨/매우나쁨)</div>
+      </div>
+      <div ref={dataRef} className="w-[75%] h-[100%] pb-5">
         <svg viewBox="0 0 800 656" xmlns="http://www.w3.org/2000/svg">
           <defs>
             <filter id="dropshadow">
@@ -275,7 +278,6 @@ export default function TotalMap() {
           />
         </svg>
       </div>
-      <div className="w-[40%] text-center"></div>
     </div>
   );
 }

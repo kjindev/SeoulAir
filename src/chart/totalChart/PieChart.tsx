@@ -45,8 +45,11 @@ export default function PieChart() {
     ],
   };
   return (
-    <div className="w-[100%] h-[100%] flex justify-center items-center">
-      <Pie options={options} data={data} />
+    <div className="w-[100%] h-[100%]">
+      <div className="text-sm text-center pt-5">미세먼지 현황 통계</div>
+      <div className="w-[100%] h-[80%] p-3">
+        <Pie options={options} data={data} />
+      </div>
     </div>
   );
 }
