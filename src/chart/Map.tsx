@@ -1,71 +1,39 @@
 import { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { todayUpdate, yesterdayUpdate } from "../store/dataSlice";
-import { nameUpdate } from "../store/nameSlice";
+import { name } from "../store/nameSlice";
 import { RootState } from "../store/store";
+import useRequest from "../hooks/useRequest";
 
 export default function Map() {
   const dispatch = useDispatch();
   const dataRef = useRef<HTMLInputElement>(null);
-  const name = useSelector((state: RootState) => {
-    return state.name.nameState;
-  });
-  const dateList = useSelector((state: RootState) => {
-    return state.name;
-  });
+  const { todayDateState, yesterdayDateState, nameState } = useSelector(
+    (state: RootState) => {
+      return state.name;
+    }
+  );
+
+  const request = useRequest();
 
   useEffect(() => {
     for (let i = 0; i < 25; i++) {
-      if (dataRef.current?.children[0].children[i + 1].id === name)
+      if (dataRef.current?.children[0].children[i + 1].id === nameState)
         dataRef.current?.children[0].children[i + 1].classList.add(
           "styleClick"
         );
     }
   }, []);
 
-  const getData = async (reqDate: string) => {
-    try {
-      const response = await fetch(
-        "https://port-0-seoulair-server-3nec02mlh4e8glv.sel4.cloudtype.app/data"
-      );
-      const result = await response.json();
-      if (reqDate === "today") {
-        dispatch(todayUpdate(result.TimeAverageAirQuality.row));
-      } else if (reqDate === "yesterday") {
-        dispatch(yesterdayUpdate(result.TimeAverageAirQuality.row));
-      }
-    } catch (error) {
-      console.log(error);
-      return null;
-    }
-  };
-
-  const updateData = async (reqDate: string, reqName: string | undefined) => {
-    await fetch(
-      "https://port-0-seoulair-server-3nec02mlh4e8glv.sel4.cloudtype.app/data",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          date: reqDate,
-          time: "",
-          name: reqName,
-        }),
-      }
-    );
-  };
-
   useEffect(() => {
-    if (dateList.todayDateState && dateList.yesterdayDateState) {
-      updateData(dateList.todayDateState, name)
-        .then(() => getData("today"))
-        .then(() => updateData(dateList.yesterdayDateState, name))
-        .then(() => getData("yesterday"))
+    if (todayDateState && yesterdayDateState) {
+      request
+        .updateData(todayDateState, "", nameState)
+        .then(() => request.getData("today"))
+        .then(() => request.updateData(yesterdayDateState, "", nameState))
+        .then(() => request.getData("yesterday"))
         .catch((error) => console.log(error));
     }
-  }, [name]);
+  }, [nameState]);
 
   const handleMapClick = (event: React.MouseEvent<HTMLElement>) => {
     const target = event.target as HTMLDivElement;
@@ -77,7 +45,7 @@ export default function Map() {
         );
       }
       target.classList.add("styleClick");
-      dispatch(nameUpdate(targetName));
+      dispatch(name(targetName));
     }
   };
 

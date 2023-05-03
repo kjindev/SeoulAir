@@ -24,6 +24,10 @@ export default function PieChart() {
   const options = {
     responsive: true,
     maintainAspectRatio: false,
+    animation: {
+      duration: 800,
+    },
+    responsiveAnimationDuration: 0,
     plugins: {
       legend: {
         display: false,
@@ -40,6 +44,7 @@ export default function PieChart() {
       {
         label: "미세먼지 상태",
         data: countList,
+        borderWidth: 1,
         backgroundColor: ["#e5e5e5", "#a3a3a3", "#525252", "#262626"],
       },
     ],

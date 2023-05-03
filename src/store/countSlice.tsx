@@ -18,21 +18,20 @@ const countSlice = createSlice({
   name: "count",
   initialState,
   reducers: {
-    code1Update: (state: StateType, action: PayloadAction<number>) => {
+    code1: (state: StateType, action: PayloadAction<number>) => {
       state.code1State = action.payload;
     },
-    code2Update: (state: StateType, action: PayloadAction<number>) => {
+    code2: (state: StateType, action: PayloadAction<number>) => {
       state.code2State = action.payload;
     },
-    code3Update: (state: StateType, action: PayloadAction<number>) => {
+    code3: (state: StateType, action: PayloadAction<number>) => {
       state.code3State = action.payload;
     },
-    code4Update: (state: StateType, action: PayloadAction<number>) => {
+    code4: (state: StateType, action: PayloadAction<number>) => {
       state.code4State = action.payload;
     },
   },
 });
 
 export default countSlice;
-export const { code1Update, code2Update, code3Update, code4Update } =
-  countSlice.actions;
+export const { code1, code2, code3, code4 } = countSlice.actions;

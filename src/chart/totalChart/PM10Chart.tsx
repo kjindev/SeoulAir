@@ -51,6 +51,10 @@ export default function PM10Chart() {
     indexAxis: "y" as const,
     responsive: true,
     maintainAspectRatio: false,
+    animation: {
+      duration: 800,
+    },
+    responsiveAnimationDuration: 0,
     plugins: {
       legend: {
         display: false,
@@ -78,9 +82,8 @@ export default function PM10Chart() {
       {
         label: "미세먼지",
         data: todayPM10,
-        borderColor: "#f97316",
-        backgroundColor: "rgb(249, 115, 22, 0.5)",
-        borderWidth: 1,
+        backgroundColor: "rgb(7, 89, 133, 0.7)",
+        borderWidth: 0,
       },
     ],
   };

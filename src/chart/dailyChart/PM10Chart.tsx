@@ -29,43 +29,43 @@ export default function PM10Chart() {
   const [yesterdayPM10, setYesterdayPM10] = useState<number[]>([]);
   const [todayPM10, setTodayPM10] = useState<number[]>([]);
   const [time, setTime] = useState<string[]>([]);
-  const todayData = useSelector((state: RootState) => {
-    return state.data.todayState;
-  });
-  const yesterdayData = useSelector((state: RootState) => {
-    return state.data.yesterdayState;
+  const { todayState, yesterdayState } = useSelector((state: RootState) => {
+    return state.data;
   });
 
   useEffect(() => {
-    if (todayData.length !== 0) {
+    if (todayState.length !== 0) {
       let todayList: number[] = [];
       let timeList: string[] = [];
-      for (let i = todayData.length - 1; i >= 0; i--) {
-        todayList.push(todayData[i].PM10);
-        timeList.push(todayData[i].MSRDT.slice(8, 10) + "시");
+      for (let i = todayState.length - 1; i >= 0; i--) {
+        todayList.push(todayState[i].PM10);
+        timeList.push(todayState[i].MSRDT.slice(8, 10) + "시");
       }
       setTodayPM10(todayList);
       setTime(timeList);
     }
-  }, [todayData]);
+  }, [todayState]);
 
   useEffect(() => {
-    if (yesterdayData.length !== 0) {
+    if (yesterdayState.length !== 0) {
       let yesterdayList: number[] = [];
-      for (let i = yesterdayData.length - 1; i >= 0; i--) {
-        yesterdayList.push(yesterdayData[i].PM10);
+      for (let i = yesterdayState.length - 1; i >= 0; i--) {
+        yesterdayList.push(yesterdayState[i].PM10);
       }
       setYesterdayPM10(yesterdayList);
     }
-  }, [yesterdayData]);
+  }, [yesterdayState]);
 
   const options = {
     responsive: true,
     maintainAspectRatio: false,
+    animation: {
+      duration: 500,
+    },
+    responsiveAnimationDuration: 0,
     plugins: {
       legend: {
         display: false,
-        padding: 20,
       },
       title: {
         display: false,
@@ -73,9 +73,13 @@ export default function PM10Chart() {
       },
     },
     scales: {
+      x: {
+        min: time[0],
+        max: time[time?.length - 1],
+      },
       y: {
         min: 0,
-        max: 100,
+        max: 80,
         ticks: {
           stepSize: 20,
         },
@@ -90,15 +94,19 @@ export default function PM10Chart() {
         fill: true,
         label: "어제",
         data: yesterdayPM10,
-        borderColor: "#fbbf24",
-        backgroundColor: "rgb(253, 224, 71, 0.3)",
+        borderWidth: 2,
+        radius: 2,
+        borderColor: "#64748b",
+        backgroundColor: "rgb(100,116,139, 0.3)",
       },
       {
         fill: true,
         label: "오늘",
         data: todayPM10,
-        borderColor: "#f97316",
-        backgroundColor: "rgb(249, 115, 22, 0.3)",
+        borderWidth: 2,
+        radius: 2,
+        borderColor: "#075985",
+        backgroundColor: "rgb(2, 132, 199, 0.4)",
       },
     ],
   };
@@ -107,8 +115,8 @@ export default function PM10Chart() {
       <div className="w-[100%] py-2 flex justify-between items-center">
         <div className="text-lg"> 미세먼지 (단위: ㎍/㎥)</div>
         <div className="px-2 text-xs">
-          <span className="p-1 mr-1 bg-amber-300 rounded-md">어제</span>
-          <span className="p-1 bg-orange-400 rounded-md">오늘</span>
+          <span className="p-1 mr-1 bg-neutral-400 rounded-md">어제</span>
+          <span className="p-1 bg-sky-700 text-white rounded-md">오늘</span>
         </div>
       </div>
       <div className="w-[100%] h-[35vh]">

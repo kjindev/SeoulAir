@@ -27,17 +27,17 @@ const dataSlice = createSlice({
   name: "data",
   initialState,
   reducers: {
-    todayUpdate: (state: StateType, action: PayloadAction<DataType[]>) => {
+    todayData: (state: StateType, action: PayloadAction<DataType[]>) => {
       state.todayState = action.payload;
     },
-    yesterdayUpdate: (state: StateType, action: PayloadAction<DataType[]>) => {
+    yesterdayData: (state: StateType, action: PayloadAction<DataType[]>) => {
       state.yesterdayState = action.payload;
     },
-    totalUpdate: (state: StateType, action: PayloadAction<DataType[]>) => {
+    totalData: (state: StateType, action: PayloadAction<DataType[]>) => {
       state.totalState = action.payload;
     },
   },
 });
 
 export default dataSlice;
-export const { todayUpdate, yesterdayUpdate, totalUpdate } = dataSlice.actions;
+export const { todayData, yesterdayData, totalData } = dataSlice.actions;

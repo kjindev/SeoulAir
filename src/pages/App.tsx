@@ -1,12 +1,13 @@
-import { useEffect } from "react";
-import Daily from "./Daily";
-import Total from "./Total";
+import { lazy, Suspense, useEffect } from "react";
 import NavBar from "./NavBar";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../store/store";
-import { todayDateUpdate, yesterdayDateUpdate } from "../store/nameSlice";
+import { todayDate, yesterdayDate } from "../store/nameSlice";
 
-function App() {
+const Daily = lazy(() => import("./Daily"));
+const Total = lazy(() => import("./Total"));
+
+export default function App() {
   const dispatch = useDispatch();
   const dailyVisible = useSelector((state: RootState) => {
     return state.name.menuState;
@@ -33,7 +34,7 @@ function App() {
     } else {
       todayMonth = String(day);
     }
-    dispatch(todayDateUpdate(todayYear + todayMonth + todayDay));
+    dispatch(todayDate(todayYear + todayMonth + todayDay));
 
     const today = new Date(year, month, day).toLocaleDateString();
     const yesterday = new Date(year, month, day - 1).toLocaleDateString();
@@ -53,9 +54,7 @@ function App() {
         yesterdayMonth = String(month + 1);
       }
     }
-    dispatch(
-      yesterdayDateUpdate(yesterdayYear + yesterdayMonth + yesterdayDay)
-    );
+    dispatch(yesterdayDate(yesterdayYear + yesterdayMonth + yesterdayDay));
   }, []);
 
   return (
@@ -63,15 +62,25 @@ function App() {
       <NavBar />
       {dailyVisible ? (
         <div className={style}>
-          <Daily />
+          <Suspense
+            fallback={
+              <div className="w-[100%] h-[100vh] bg-neutral-100 flex justify-center items-center"></div>
+            }
+          >
+            <Daily />
+          </Suspense>
         </div>
       ) : (
         <div className={style}>
-          <Total />
+          <Suspense
+            fallback={
+              <div className="w-[100%] h-[100vh] bg-neutral-100 flex justify-center items-center"></div>
+            }
+          >
+            <Total />
+          </Suspense>
         </div>
       )}
     </div>
   );
 }
-
-export default App;

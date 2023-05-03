@@ -38,6 +38,10 @@ export default function BubbleChart() {
     indexAxis: "y" as const,
     responsive: true,
     maintainAspectRatio: false,
+    animation: {
+      duration: 800,
+    },
+    responsiveAnimationDuration: 0,
     plugins: {
       legend: {
         display: false,
@@ -53,8 +57,9 @@ export default function BubbleChart() {
       {
         label: "Red dataset",
         data: todayPM10,
-        borderColor: "#f97316",
-        backgroundColor: "rgb(249, 115, 22, 0.5)",
+        radius: 0,
+        backgroundColor: "rgb(115, 115, 115, 0.5)",
+        borderWidth: 0,
       },
     ],
   };

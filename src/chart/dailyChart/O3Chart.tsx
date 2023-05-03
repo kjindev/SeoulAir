@@ -25,43 +25,43 @@ export default function O3Chart() {
   const [yesterdayO3, setYesterdayO3] = useState<number[]>([]);
   const [todayO3, setTodayO3] = useState<number[]>([]);
   const [time, setTime] = useState<string[]>([]);
-  const todayData = useSelector((state: RootState) => {
-    return state.data.todayState;
-  });
-  const yesterdayData = useSelector((state: RootState) => {
-    return state.data.yesterdayState;
+  const { todayState, yesterdayState } = useSelector((state: RootState) => {
+    return state.data;
   });
 
   useEffect(() => {
-    if (todayData.length !== 0) {
+    if (todayState.length !== 0) {
       let todayO3List: number[] = [];
       let timeList: string[] = [];
       for (let i = 4; i >= 0; i--) {
-        todayO3List.push(todayData[i]?.O3);
-        timeList.push(todayData[i]?.MSRDT.slice(8, 10) + "시");
+        todayO3List.push(todayState[i]?.O3);
+        timeList.push(todayState[i]?.MSRDT.slice(8, 10) + "시");
       }
       setTodayO3(todayO3List);
       setTime(timeList);
     }
-  }, [todayData]);
+  }, [todayState]);
 
   useEffect(() => {
-    if (yesterdayData.length !== 0) {
+    if (yesterdayState.length !== 0) {
       let yesterdayO3List: number[] = [];
       for (let i = 4; i >= 0; i--) {
-        yesterdayO3List.push(yesterdayData[i]?.O3);
+        yesterdayO3List.push(yesterdayState[i]?.O3);
       }
       setYesterdayO3(yesterdayO3List);
     }
-  }, [yesterdayData]);
+  }, [yesterdayState]);
 
   const options = {
     responsive: true,
     maintainAspectRatio: false,
+    animation: {
+      duration: 500,
+    },
+    responsiveAnimationDuration: 0,
     plugins: {
       legend: {
         display: false,
-        padding: 20,
       },
       title: {
         display: false,
@@ -83,16 +83,18 @@ export default function O3Chart() {
     labels: time,
     datasets: [
       {
-        label: "CO",
+        label: "어제",
         data: yesterdayO3,
-        borderColor: "#fbbf24",
-        backgroundColor: "#fbbf24",
+        borderWidth: 0,
+        radius: 0,
+        backgroundColor: "#a3a3a3",
       },
       {
-        label: "O3",
+        label: "오늘",
         data: todayO3,
-        borderColor: "#f97316",
-        backgroundColor: "#f97316",
+        borderWidth: 0,
+        radius: 0,
+        backgroundColor: "#075985",
       },
     ],
   };

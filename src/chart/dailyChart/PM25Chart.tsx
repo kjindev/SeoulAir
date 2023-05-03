@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
 import {
   Chart as ChartJS,
   LinearScale,
@@ -9,9 +8,8 @@ import {
   Legend,
 } from "chart.js";
 import { Scatter } from "react-chartjs-2";
+import { useSelector } from "react-redux";
 import { RootState } from "../../store/store";
-
-ChartJS.register(LinearScale, PointElement, LineElement, Tooltip, Legend);
 
 export default function PM25Chart() {
   const [todayPM25, setTodayPM25] = useState<{ x: number; y: number }[]>([]);
@@ -19,45 +17,46 @@ export default function PM25Chart() {
     { x: number; y: number }[]
   >([]);
   const [time, setTime] = useState<number[]>([]);
-  const todayData = useSelector((state: RootState) => {
-    return state.data.todayState;
-  });
-  const yesterdayData = useSelector((state: RootState) => {
-    return state.data.yesterdayState;
+  const { todayState, yesterdayState } = useSelector((state: RootState) => {
+    return state.data;
   });
 
   useEffect(() => {
-    if (todayData) {
+    if (todayState) {
       let todayList: { x: number; y: number }[] = [];
       let timeList: number[] = [];
-      for (let i = todayData.length - 1; i >= 0; i--) {
+      for (let i = todayState.length - 1; i >= 0; i--) {
         todayList.push({
-          x: Number(todayData[i].MSRDT.slice(8, 10)),
-          y: todayData[i].PM25,
+          x: Number(todayState[i].MSRDT.slice(8, 10)),
+          y: todayState[i].PM25,
         });
-        timeList.push(Number(todayData[i].MSRDT.slice(8, 10)));
+        timeList.push(Number(todayState[i].MSRDT.slice(8, 10)));
       }
       setTodayPM25(todayList);
       setTime(timeList);
     }
-  }, [todayData]);
+  }, [todayState]);
 
   useEffect(() => {
-    if (yesterdayData) {
+    if (yesterdayState) {
       let yesterdayList: { x: number; y: number }[] = [];
-      for (let i = yesterdayData.length - 1; i >= 0; i--) {
+      for (let i = yesterdayState.length - 1; i >= 0; i--) {
         yesterdayList.push({
-          x: Number(yesterdayData[i].MSRDT.slice(8, 10)),
-          y: yesterdayData[i].PM25,
+          x: Number(yesterdayState[i].MSRDT.slice(8, 10)),
+          y: yesterdayState[i].PM25,
         });
       }
       setYesterdayPM25(yesterdayList);
     }
-  }, [yesterdayData]);
+  }, [yesterdayState]);
 
   const options = {
     responsive: true,
     maintainAspectRatio: false,
+    animation: {
+      duration: 500,
+    },
+    responsiveAnimationDuration: 0,
     plugins: {
       legend: {
         display: false,
@@ -83,18 +82,18 @@ export default function PM25Chart() {
     datasets: [
       {
         fill: true,
-        label: "어제",
-        data: yesterdayPM25,
-        borderColor: "#fbbf24",
-        backgroundColor: "#fbbf24",
+        label: "오늘",
+        data: todayPM25,
+        borderColor: "#075985",
+        backgroundColor: "#075985",
         borderWidth: 3,
       },
       {
         fill: true,
-        label: "오늘",
-        data: todayPM25,
-        borderColor: "#f97316",
-        backgroundColor: "#f97316",
+        label: "어제",
+        data: yesterdayPM25,
+        borderColor: "#a3a3a3",
+        backgroundColor: "#a3a3a3",
         borderWidth: 3,
       },
     ],

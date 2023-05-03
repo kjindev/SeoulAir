@@ -1,12 +1,7 @@
 import { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../store/store";
-import {
-  code1Update,
-  code2Update,
-  code3Update,
-  code4Update,
-} from "../store/countSlice";
+import { code1, code2, code3, code4 } from "../store/countSlice";
 
 export default function TotalMap() {
   const dispatch = useDispatch();
@@ -17,10 +12,10 @@ export default function TotalMap() {
 
   useEffect(() => {
     if (dataList.length !== 0) {
-      let code1: number = 0;
-      let code2: number = 0;
-      let code3: number = 0;
-      let code4: number = 0;
+      let count1: number = 0;
+      let count2: number = 0;
+      let count3: number = 0;
+      let count4: number = 0;
       for (let i = 0; i < dataList.length; i++) {
         if (dataRef.current) {
           const dataClass = dataRef.current.children[0];
@@ -29,32 +24,32 @@ export default function TotalMap() {
               dataClass.children[i + 1].classList[0]
             );
             dataClass.children[i + 1].classList.add("PM10map01");
-            code1 = code1 + 1;
+            count1 = count1 + 1;
           } else if (dataList[i].PM10 > 30 && dataList[i].PM10 <= 80) {
             dataClass.children[i + 1].classList.remove(
               dataClass.children[i + 1].classList[0]
             );
             dataClass.children[i + 1].classList.add("PM10map02");
-            code2 = code2 + 1;
+            count2 = count2 + 1;
           } else if (dataList[i].PM10 > 81 && dataList[i].PM10 <= 150) {
             dataClass.children[i + 1].classList.remove(
               dataClass.children[i + 1].classList[0]
             );
             dataClass.children[i + 1].classList.add("PM10map03");
-            code3 = code3 + 1;
+            count3 = count3 + 1;
           } else if (dataList[i].PM10 > 150) {
             dataClass.children[i + 1].classList.remove(
               dataClass.children[i + 1].classList[0]
             );
             dataClass.children[i + 1].classList.add("PM10map04");
-            code4 = code4 + 1;
+            count4 = count4 + 1;
           }
         }
       }
-      dispatch(code1Update(code1));
-      dispatch(code2Update(code2));
-      dispatch(code3Update(code3));
-      dispatch(code4Update(code4));
+      dispatch(code1(count1));
+      dispatch(code2(count2));
+      dispatch(code3(count3));
+      dispatch(code4(count4));
     }
   }, [dataList]);
 
