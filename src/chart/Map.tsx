@@ -58,11 +58,13 @@ export default function Map() {
   };
 
   useEffect(() => {
-    updateData(dateList.todayDateState, name)
-      .then(() => getData("today"))
-      .then(() => updateData(dateList.yesterdayDateState, name))
-      .then(() => getData("yesterday"))
-      .catch((error) => console.log(error));
+    if (dateList.todayDateState && dateList.yesterdayDateState) {
+      updateData(dateList.todayDateState, name)
+        .then(() => getData("today"))
+        .then(() => updateData(dateList.yesterdayDateState, name))
+        .then(() => getData("yesterday"))
+        .catch((error) => console.log(error));
+    }
   }, [name]);
 
   const handleMapClick = (event: React.MouseEvent<HTMLElement>) => {

@@ -58,7 +58,7 @@ export default function Daily() {
     );
   };
 
-  const optionClick = (event: React.MouseEvent<HTMLSelectElement>) => {
+  const changeOption = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const target = event.target as HTMLSelectElement;
     const selectTime = target.value.slice(0, 2);
     updateData(date.todayDateState, selectTime)
@@ -79,7 +79,7 @@ export default function Daily() {
       <div className="pt-[5%] lg:pt-0 px-[5%] pb-5 w-[100%] flex flex-col md:flex-row items-center">
         <div className="text-2xl"> | 오늘의 서울 대기 정보</div>
         <div className="p-3">
-          <select onClick={optionClick} className="px-3 py-1 drop-shadow">
+          <select onChange={changeOption} className="px-3 py-1 drop-shadow">
             {timeList?.map((item, index) => (
               <option key={index} value={item}>
                 {item}
