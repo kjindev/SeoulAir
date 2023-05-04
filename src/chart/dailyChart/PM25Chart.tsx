@@ -84,8 +84,8 @@ export default function PM25Chart() {
         fill: true,
         label: "오늘",
         data: todayPM25,
-        borderColor: "#075985",
-        backgroundColor: "#075985",
+        borderColor: "#d97706",
+        backgroundColor: "#d97706",
         borderWidth: 3,
       },
       {

@@ -2,14 +2,18 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface StateType {
   nameState: string | undefined;
-  menuState: boolean;
+  dailyState: boolean;
+  totalState: boolean;
+  locationState: boolean;
   todayDateState: string;
   yesterdayDateState: string;
 }
 
 const initialState: StateType = {
   nameState: "중구",
-  menuState: true,
+  dailyState: true,
+  totalState: false,
+  locationState: false,
   todayDateState: "",
   yesterdayDateState: "",
 };
@@ -21,8 +25,14 @@ const nameSlice = createSlice({
     name: (state: StateType, action: PayloadAction<string | undefined>) => {
       state.nameState = action.payload;
     },
-    menu: (state: StateType, action: PayloadAction<boolean>) => {
-      state.menuState = action.payload;
+    daily: (state: StateType, action: PayloadAction<boolean>) => {
+      state.dailyState = action.payload;
+    },
+    total: (state: StateType, action: PayloadAction<boolean>) => {
+      state.totalState = action.payload;
+    },
+    location: (state: StateType, action: PayloadAction<boolean>) => {
+      state.locationState = action.payload;
     },
     todayDate: (state: StateType, action: PayloadAction<string>) => {
       state.todayDateState = action.payload;
@@ -34,4 +44,5 @@ const nameSlice = createSlice({
 });
 
 export default nameSlice;
-export const { name, menu, todayDate, yesterdayDate } = nameSlice.actions;
+export const { name, daily, total, location, todayDate, yesterdayDate } =
+  nameSlice.actions;

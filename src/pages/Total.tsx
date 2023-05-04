@@ -4,7 +4,7 @@ import { RootState } from "../store/store";
 import useRequest from "../hooks/useRequest";
 
 const PM10Chart = lazy(() => import("../chart/totalChart/PM10Chart"));
-const TotalMap = lazy(() => import("../chart/TotalMap"));
+const TotalMap = lazy(() => import("../chart/maps/TotalMap"));
 const PieChart = lazy(() => import("../chart/totalChart/PieChart"));
 const BubbleChart = lazy(() => import("../chart/totalChart/BubbleChart"));
 

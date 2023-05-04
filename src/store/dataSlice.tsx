@@ -11,16 +11,30 @@ interface DataType {
   SO2: number;
 }
 
+interface AddressType {
+  NAME: string;
+  ADDRESS: string;
+  LAT: number;
+  LNG: number;
+}
+
 interface StateType {
   todayState: DataType[];
   yesterdayState: DataType[];
   totalState: DataType[];
+  addressState: AddressType;
 }
 
 const initialState: StateType = {
   todayState: [],
   yesterdayState: [],
   totalState: [],
+  addressState: {
+    NAME: "중구",
+    ADDRESS: "서울 중구 덕수궁길 15 시청서소문별관 3동",
+    LAT: 37.5643408,
+    LNG: 126.9756125,
+  },
 };
 
 const dataSlice = createSlice({
@@ -36,8 +50,12 @@ const dataSlice = createSlice({
     totalData: (state: StateType, action: PayloadAction<DataType[]>) => {
       state.totalState = action.payload;
     },
+    address: (state: StateType, action: PayloadAction<AddressType>) => {
+      state.addressState = action.payload;
+    },
   },
 });
 
 export default dataSlice;
-export const { todayData, yesterdayData, totalData } = dataSlice.actions;
+export const { todayData, yesterdayData, totalData, address } =
+  dataSlice.actions;

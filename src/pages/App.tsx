@@ -3,15 +3,24 @@ import NavBar from "./NavBar";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../store/store";
 import { todayDate, yesterdayDate } from "../store/nameSlice";
+import Location from "./Location";
+
+declare global {
+  interface Window {
+    naver: any;
+  }
+}
 
 const Daily = lazy(() => import("./Daily"));
 const Total = lazy(() => import("./Total"));
 
 export default function App() {
   const dispatch = useDispatch();
-  const dailyVisible = useSelector((state: RootState) => {
-    return state.name.menuState;
-  });
+  const { dailyState, totalState, locationState } = useSelector(
+    (state: RootState) => {
+      return state.name;
+    }
+  );
   const style =
     "pt-[10vh] md:pt-0 md:pl-[15%] w-[100%] flex flex-col justify-center items-center";
 
@@ -60,7 +69,15 @@ export default function App() {
   return (
     <div className="w-[100%] lg:h-[100vh] pb-5 flex bg-neutral-100">
       <NavBar />
-      {dailyVisible ? (
+      {locationState && (
+        <>
+          <div className="fixed z-[2] pt-[10vh] md:pt-0 md:pl-[15%] w-[100vw] h-[100vh] flex justify-center items-center">
+            <Location />
+          </div>
+          <div className="fixed z-[1] w-[100vw] h-[100vh] bg-black opacity-50"></div>
+        </>
+      )}
+      {dailyState && (
         <div className={style}>
           <Suspense
             fallback={
@@ -70,7 +87,8 @@ export default function App() {
             <Daily />
           </Suspense>
         </div>
-      ) : (
+      )}
+      {totalState && (
         <div className={style}>
           <Suspense
             fallback={

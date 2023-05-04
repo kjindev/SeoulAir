@@ -12,9 +12,13 @@
     <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
     <title>서울시 대기환경 통계</title>
+    <script
+      type="text/javascript"
+      src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=<%=process.env.REACT_APP_MAP_CLIENT_ID%>"
+    ></script>
   </head>
   <body>
-    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <noscript>페이지 로딩을 위해 자바스크립트를 활성화 해주세요 :)</noscript>
     <div id="root"></div>
   </body>
 </html>

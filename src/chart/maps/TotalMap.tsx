@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../store/store";
-import { code1, code2, code3, code4 } from "../store/countSlice";
+import { RootState } from "../../store/store";
+import { code1, code2, code3, code4 } from "../../store/countSlice";
 
 export default function TotalMap() {
   const dispatch = useDispatch();

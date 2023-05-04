@@ -1,10 +1,11 @@
 import { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { name } from "../store/nameSlice";
-import { RootState } from "../store/store";
-import useRequest from "../hooks/useRequest";
+import { name } from "../../store/nameSlice";
+import { RootState } from "../../store/store";
+import useRequest from "../../hooks/useRequest";
+import { address } from "../../store/dataSlice";
 
-export default function Map() {
+export default function DailyMap() {
   const dispatch = useDispatch();
   const dataRef = useRef<HTMLInputElement>(null);
   const { todayDateState, yesterdayDateState, nameState } = useSelector(
@@ -35,6 +36,19 @@ export default function Map() {
     }
   }, [nameState]);
 
+  const getLocation = async (reqName: string) => {
+    try {
+      const response = await fetch(
+        `https://port-0-seoulair-server-3nec02mlh4e8glv.sel4.cloudtype.app/location?NAME=${reqName}`
+      );
+      const result = await response.json();
+      dispatch(address(result));
+    } catch (error) {
+      console.log(error);
+      return null;
+    }
+  };
+
   const handleMapClick = (event: React.MouseEvent<HTMLElement>) => {
     const target = event.target as HTMLDivElement;
     const targetName = target.dataset.name;
@@ -45,6 +59,7 @@ export default function Map() {
         );
       }
       target.classList.add("styleClick");
+      getLocation(targetName);
       dispatch(name(targetName));
     }
   };

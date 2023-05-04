@@ -94,7 +94,7 @@ export default function O3Chart() {
         data: todayO3,
         borderWidth: 0,
         radius: 0,
-        backgroundColor: "#075985",
+        backgroundColor: "#d97706",
       },
     ],
   };

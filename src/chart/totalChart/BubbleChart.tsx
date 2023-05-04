@@ -58,7 +58,7 @@ export default function BubbleChart() {
         label: "Red dataset",
         data: todayPM10,
         radius: 0,
-        backgroundColor: "rgb(115, 115, 115, 0.5)",
+        backgroundColor: "rgb(217, 119, 6, 0.7)",
         borderWidth: 0,
       },
     ],
