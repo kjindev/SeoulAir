@@ -87,14 +87,14 @@ export default function O3Chart() {
         data: yesterdayO3,
         borderWidth: 0,
         radius: 0,
-        backgroundColor: "#a3a3a3",
+        backgroundColor: "#9ca3af",
       },
       {
         label: "오늘",
         data: todayO3,
         borderWidth: 0,
         radius: 0,
-        backgroundColor: "#d97706",
+        backgroundColor: "#581c87",
       },
     ],
   };

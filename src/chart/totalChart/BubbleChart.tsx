@@ -55,10 +55,10 @@ export default function BubbleChart() {
   const data = {
     datasets: [
       {
-        label: "Red dataset",
+        label: "초미세먼지",
         data: todayPM10,
         radius: 0,
-        backgroundColor: "rgb(217, 119, 6, 0.7)",
+        backgroundColor: "rgb(71, 85, 105, 0.8)",
         borderWidth: 0,
       },
     ],

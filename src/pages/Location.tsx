@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { RootState } from "../store/store";
 
 export default function Location() {
@@ -24,7 +24,7 @@ export default function Location() {
   }, [LNG]);
 
   return (
-    <div className="w-[90vw] md:w-[60vw] h-[85vh] bg-white rounded-xl drop-shadow-md p-7">
+    <div className="w-[90vw] md:w-[60vw] h-[75vh] bg-white rounded-xl drop-shadow-md p-7">
       <div className="text-2xl"> | {NAME}의 측정소</div>
       <div className="mb-3">{ADDRESS}</div>
       <div ref={mapRef} className="h-[85%] drop-shadow-md"></div>

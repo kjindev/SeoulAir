@@ -54,7 +54,7 @@ export default function SO2Chart() {
     datasets: [
       {
         data: [todayState[0]?.SO2, 0.004],
-        backgroundColor: ["#525252", "#a3a3a3"],
+        backgroundColor: ["#4b5563", "#d1d5db"],
         cutout: 45,
         borderWidth: [0, 5],
       },

@@ -54,7 +54,7 @@ export default function NO2Chart() {
     datasets: [
       {
         data: [todayState[0]?.NO2, 0.036],
-        backgroundColor: ["#525252", "#a3a3a3"],
+        backgroundColor: ["#4b5563", "#d1d5db"],
         cutout: 45,
         borderWidth: [0, 5],
       },

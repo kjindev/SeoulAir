@@ -3,7 +3,6 @@ import NavBar from "./NavBar";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../store/store";
 import { todayDate, yesterdayDate } from "../store/nameSlice";
-import Location from "./Location";
 
 declare global {
   interface Window {
@@ -13,6 +12,7 @@ declare global {
 
 const Daily = lazy(() => import("./Daily"));
 const Total = lazy(() => import("./Total"));
+const Location = lazy(() => import("./Location"));
 
 export default function App() {
   const dispatch = useDispatch();
@@ -67,12 +67,14 @@ export default function App() {
   }, []);
 
   return (
-    <div className="w-[100%] lg:h-[100vh] pb-5 flex bg-neutral-100">
+    <div className="w-[100%] lg:h-[100vh] pb-5 flex bg-gray-100">
       <NavBar />
       {locationState && (
         <>
           <div className="fixed z-[2] pt-[10vh] md:pt-0 md:pl-[15%] w-[100vw] h-[100vh] flex justify-center items-center">
-            <Location />
+            <Suspense fallback={<div></div>}>
+              <Location />
+            </Suspense>
           </div>
           <div className="fixed z-[1] w-[100vw] h-[100vh] bg-black opacity-50"></div>
         </>
@@ -81,7 +83,7 @@ export default function App() {
         <div className={style}>
           <Suspense
             fallback={
-              <div className="w-[100%] h-[100vh] bg-neutral-100 flex justify-center items-center"></div>
+              <div className="w-[100%] h-[100vh] bg-gray-100 flex justify-center items-center"></div>
             }
           >
             <Daily />
@@ -92,7 +94,7 @@ export default function App() {
         <div className={style}>
           <Suspense
             fallback={
-              <div className="w-[100%] h-[100vh] bg-neutral-100 flex justify-center items-center"></div>
+              <div className="w-[100%] h-[100vh] bg-gray-100 flex justify-center items-center"></div>
             }
           >
             <Total />

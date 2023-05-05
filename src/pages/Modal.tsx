@@ -21,7 +21,7 @@ export default function Modal() {
   return (
     <div
       onClick={iconClick}
-      className="fixed z-[2] bottom-0 right-0 drop-shadow-lg m-3 text-lg bg-amber-600 w-[50px] h-[50px] rounded-full flex justify-center items-center hover:scale-110 hover:cursor-pointer text-white"
+      className="fixed z-[2] bottom-0 right-0 drop-shadow-lg m-3 text-lg bg-slate-800 w-[50px] h-[50px] rounded-full flex justify-center items-center hover:scale-110 hover:cursor-pointer text-white"
     >
       {locationState ? <div>X</div> : <div>?</div>}
     </div>

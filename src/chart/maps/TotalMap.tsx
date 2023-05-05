@@ -56,7 +56,13 @@ export default function TotalMap() {
   return (
     <div className="w-[100%] h-[100%] flex flex-col items-center">
       <div className="text-sm text-center pt-5">
-        미세먼지 현황 <div className="text-xs">(좋음/보통/나쁨/매우나쁨)</div>
+        미세먼지 현황{" "}
+        <div className="text-xs">
+          <span className="bg-slate-300 px-1">좋음</span>
+          <span className="bg-slate-500 px-1">보통</span>
+          <span className="bg-slate-700 px-1 text-white">나쁨</span>
+          <span className="bg-slate-900 px-1 text-white">매우나쁨</span>
+        </div>
       </div>
       <div ref={dataRef} className="w-[75%] h-[100%] pb-5">
         <svg viewBox="0 0 800 656" xmlns="http://www.w3.org/2000/svg">

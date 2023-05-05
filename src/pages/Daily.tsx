@@ -46,7 +46,7 @@ export default function Daily() {
     <div>
       <div className="pt-[5%] lg:pt-0 px-[5%] pb-5 w-[100%] flex flex-col md:flex-row justify-between items-center">
         <Modal />
-        <div className="text-2xl"> | {nameState}의 실시간 대기 정보</div>
+        <div className="text-2xl"> | {nameState}의 실시간 대기환경</div>
         <div>
           <span>({today?.slice(0, 4)}년 </span>
           <span>{today?.slice(4, 6)}월 </span>

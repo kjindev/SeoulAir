@@ -42,10 +42,10 @@ export default function PieChart() {
     labels: ["좋음", "보통", "나쁨", "매우나쁨"],
     datasets: [
       {
-        label: "미세먼지 상태",
+        label: "상태",
         data: countList,
         borderWidth: 1,
-        backgroundColor: ["#e5e5e5", "#a3a3a3", "#525252", "#262626"],
+        backgroundColor: ["#cbd5e1", "#64748b", "#334155", "#0f172a"],
       },
     ],
   };

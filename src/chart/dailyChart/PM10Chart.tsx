@@ -96,8 +96,8 @@ export default function PM10Chart() {
         data: yesterdayPM10,
         borderWidth: 2,
         radius: 2,
-        borderColor: "#737373",
-        backgroundColor: "rgb(163, 163, 163, 0.3)",
+        borderColor: "#64748b",
+        backgroundColor: "rgb(100, 116, 139, 0.3)",
       },
       {
         fill: true,
@@ -105,8 +105,8 @@ export default function PM10Chart() {
         data: todayPM10,
         borderWidth: 2,
         radius: 2,
-        borderColor: "#d97706",
-        backgroundColor: "rgb(180, 83, 9, 0.4)",
+        borderColor: "#4c1d95",
+        backgroundColor: "rgb(76, 29, 149, 0.5)",
       },
     ],
   };
@@ -115,8 +115,8 @@ export default function PM10Chart() {
       <div className="w-[100%] py-2 flex justify-between items-center">
         <div className="text-lg"> 미세먼지 (단위: ㎍/㎥)</div>
         <div className="px-2 text-xs">
-          <span className="p-1 mr-1 bg-neutral-400 rounded-md">어제</span>
-          <span className="p-1 bg-amber-600 text-white rounded-md">오늘</span>
+          <span className="p-1 mr-1 bg-gray-400 rounded-md">어제</span>
+          <span className="p-1 bg-purple-900 text-white rounded-md">오늘</span>
         </div>
       </div>
       <div className="w-[100%] h-[35vh]">

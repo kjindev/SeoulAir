@@ -49,7 +49,7 @@ export default function Daily() {
   return (
     <div>
       <div className="pt-[5%] lg:pt-0 px-[5%] pb-5 w-[100%] flex flex-col md:flex-row items-center">
-        <div className="text-2xl"> | 오늘의 서울 대기 정보</div>
+        <div className="text-2xl"> | 오늘의 서울 대기환경</div>
         <div className="p-3">
           <select onChange={changeOption} className="px-3 py-1 drop-shadow">
             {timeList?.map((item, index) => (
