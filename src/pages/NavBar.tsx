@@ -17,7 +17,7 @@ export default function NavBar() {
 
   const menuClick = (event: React.MouseEvent<HTMLElement>) => {
     const target = event.target as HTMLDivElement;
-    if (target.innerText === "자치구") {
+    if (target.innerText === "구") {
       dispatch(daily(true));
       dispatch(total(false));
       dispatch(location(false));
@@ -33,7 +33,7 @@ export default function NavBar() {
       onClick={menuClick}
       className="z-[1] fixed w-[100vw] h-[7vh] md:w-[15%] md:h-[100vh] bg-gray-800 flex flex-row md:flex-col justify-center md:justify-start items-center md:pt-[10vh]"
     >
-      <span className={dailyState ? clickedStyle : style}>자치구</span>
+      <span className={dailyState ? clickedStyle : style}>구</span>
       <span className={totalState ? clickedStyle : style}>서울 전체</span>
     </div>
   );

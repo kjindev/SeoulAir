@@ -23,9 +23,6 @@ export default function Daily() {
   const todayState = useSelector((state: RootState) => {
     return state.data.todayState;
   });
-  const locationState = useSelector((state: RootState) => {
-    return state.name.locationState;
-  });
 
   useEffect(() => {
     setToday(todayState[0]?.MSRDT);
