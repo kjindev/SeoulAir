@@ -58,7 +58,7 @@ export default function BubbleChart() {
         label: "초미세먼지",
         data: todayPM10,
         radius: 0,
-        backgroundColor: "rgb(71, 85, 105, 0.8)",
+        backgroundColor: "rgb(88, 28, 135, 0.5)",
         borderWidth: 0,
       },
     ],

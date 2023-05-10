@@ -69,7 +69,7 @@ export default function PM25Chart() {
       },
       y: {
         min: 0,
-        max: 40,
+        max: 50,
         ticks: {
           stepSize: 10,
         },

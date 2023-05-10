@@ -82,7 +82,7 @@ export default function PM10Chart() {
       {
         label: "미세먼지",
         data: todayPM10,
-        backgroundColor: "#475569",
+        backgroundColor: "#3b0764",
         borderWidth: 0,
       },
     ],

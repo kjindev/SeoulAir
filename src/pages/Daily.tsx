@@ -3,7 +3,6 @@ import { useSelector } from "react-redux";
 import { RootState } from "../store/store";
 import useRequest from "../hooks/useRequest";
 import Modal from "./Modal";
-import Location from "./Location";
 
 const NO2Chart = lazy(() => import("../chart/dailyChart/NO2Chart"));
 const PM25Chart = lazy(() => import("../chart/dailyChart/PM25Chart"));
@@ -14,7 +13,7 @@ const DailyMap = lazy(() => import("../chart/maps/DailyMap"));
 
 export default function Daily() {
   const [today, setToday] = useState("");
-  const request = useRequest();
+  const { updateData, getData } = useRequest();
   const { todayDateState, yesterdayDateState, nameState } = useSelector(
     (state: RootState) => {
       return state.name;
@@ -29,15 +28,12 @@ export default function Daily() {
   }, [todayState]);
 
   useEffect(() => {
-    if (todayDateState.length !== 0) {
-      request
-        .updateData(todayDateState, "", nameState)
-        .then(() => request.getData("today"))
-        .then(() => request.updateData(yesterdayDateState, "", nameState))
-        .then(() => request.getData("yesterday"))
-        .catch((error) => console.log(error));
-    }
-  }, [todayDateState]);
+    updateData(todayDateState, "", nameState)
+      .then(() => getData("today"))
+      .then(() => updateData(yesterdayDateState, "", nameState))
+      .then(() => getData("yesterday"))
+      .catch((error) => console.log(error));
+  }, []);
 
   return (
     <div>

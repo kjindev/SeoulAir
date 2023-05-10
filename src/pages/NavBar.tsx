@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { daily, total, location } from "../store/nameSlice";
+import { daily, total } from "../store/nameSlice";
 import { RootState } from "../store/store";
 
 export default function NavBar() {
@@ -20,11 +20,9 @@ export default function NavBar() {
     if (target.innerText === "구") {
       dispatch(daily(true));
       dispatch(total(false));
-      dispatch(location(false));
     } else if (target.innerText === "서울 전체") {
       dispatch(daily(false));
       dispatch(total(true));
-      dispatch(location(false));
     }
   };
 

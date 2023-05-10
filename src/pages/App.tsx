@@ -29,19 +29,18 @@ export default function App() {
     const year = date.getFullYear();
     const month = date.getMonth();
     const day = date.getDate();
-
     let todayYear = String(year);
     let todayMonth = "";
     let todayDay = "";
     if (String(month + 1).length === 1) {
       todayMonth = `0${month + 1}`;
-    } else {
+    } else if (String(month + 1).length === 2) {
       todayMonth = String(month + 1);
     }
     if (String(day).length === 1) {
       todayDay = `0${day}`;
     } else {
-      todayMonth = String(day);
+      todayDay = String(day);
     }
     dispatch(todayDate(todayYear + todayMonth + todayDay));
 

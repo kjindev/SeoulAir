@@ -10,12 +10,15 @@ export default function useGetData() {
         "https://port-0-seoulair-server-3nec02mlh4e8glv.sel4.cloudtype.app/data"
       );
       const result = await response.json();
-      if (dateType === "today") {
-        dispatch(todayData(result.TimeAverageAirQuality.row));
-      } else if (dateType === "yesterday") {
-        dispatch(yesterdayData(result.TimeAverageAirQuality.row));
-      } else if (dateType === "total") {
-        dispatch(totalData(result.TimeAverageAirQuality.row));
+      if (!result.RESULT) {
+        const data = result.TimeAverageAirQuality.row;
+        if (dateType === "today") {
+          dispatch(todayData(data));
+        } else if (dateType === "yesterday") {
+          dispatch(yesterdayData(data));
+        } else if (dateType === "total") {
+          dispatch(totalData(data));
+        }
       }
     } catch (error) {
       console.log(error);
@@ -29,6 +32,7 @@ export default function useGetData() {
     reqName: string | undefined
   ) => {
     try {
+      console.log(reqDate, reqTime, reqName);
       const response = await fetch(
         "https://port-0-seoulair-server-3nec02mlh4e8glv.sel4.cloudtype.app/data",
         {
