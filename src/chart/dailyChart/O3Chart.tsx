@@ -71,7 +71,6 @@ export default function O3Chart() {
     scales: {
       y: {
         min: 0,
-        max: 0.08,
         ticks: {
           stepSize: 0.02,
         },
